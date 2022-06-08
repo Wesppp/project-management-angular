@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="project my-info-card">
+    <h1>{{ project.title }}</h1>
+    <hr>
+    <p>{{ project.description }}</p>
+    <a class="back-arrow" (click)="goBack()">
+      <img src="../..//src/assets/icons/back-arrow.png" alt="Back">
+    </a>
+  </div>
+
+  <div *ngIf="role === 'admin'">
+    <h5>Users working on the project:</h5>
+    <app-progress-spinner *ngIf="isLoading; else usersList"></app-progress-spinner>
+    <ng-template #usersList>
+      <ul class="users-list">
+        <app-user-card *ngFor="let user of usersInProject"
+                       [user]="user" [project]="project" (userTransfer)="updateUsers($event)"></app-user-card>
+      </ul>
+    </ng-template>
+  </div>
+
+    <div class="comments">
+      <form [formGroup]="commentsForm" (ngSubmit)="addComment(commentsForm.value.content)">
+        <h5>Leave a comment:</h5>
+        <textarea class="form-control" rows="1" formControlName="content"></textarea>
+        <button type="submit" class="btn btn-warning" [disabled]="commentsForm.invalid">Add</button>
+      </form>
+      <hr>
+      <ul class="comments-list">
+        <app-comment *ngFor="let comment of comments" [comment]="comment"></app-comment>
+      </ul>
+    </div>
+</div>
+

@@ -1,0 +1,30 @@
+.container {
+  margin-top: 2rem;
+
+  h5 {
+    color: #fff;
+  }
+
+  .users-list {
+    padding-left: 0;
+  }
+
+  .comments {
+    margin-top: 4rem;
+
+    form {
+      display: flex;
+      justify-content: space-around;
+
+      textarea {
+        width: 70%;
+      }
+    }
+  }
+
+  h4 {
+    text-align: center;
+    font-weight: 600;
+    color: #fff;
+  }
+}

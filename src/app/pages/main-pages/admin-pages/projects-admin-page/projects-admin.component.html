@@ -1,0 +1,30 @@
+<div class="container">
+  <h1>Projects</h1>
+
+  <button class="btn btn-warning add-btn" type="button" data-bs-toggle="modal"
+          (click)="openAddModal()">Add new
+    project
+  </button>
+  <hr>
+
+  <header>
+    <div class="title">
+      <h3>Find the project:</h3>
+    </div>
+    <form class="d-flex search">
+      <input class="form-control me-2" type="search" placeholder="Project" aria-label="Search"
+             [(ngModel)]="search" name="search">
+    </form>
+  </header>
+
+  <app-progress-spinner *ngIf="isLoading; else projectsList"></app-progress-spinner>
+
+  <h2 *ngIf="isEmpty">There are no projects available. Add a new one</h2>
+
+  <ng-template #projectsList>
+    <ul class="projects-list">
+      <app-project-card *ngFor="let project of projects | filter:'title':search"
+                        [project]="project" (broadcastEvent)="changeProjects($event)"></app-project-card>
+    </ul>
+  </ng-template>
+</div>

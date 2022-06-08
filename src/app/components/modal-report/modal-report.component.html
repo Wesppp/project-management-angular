@@ -1,0 +1,20 @@
+<form [formGroup]="reportForm" (ngSubmit)="addReport(reportForm.value);reportForm.reset()"
+      *ngIf="reportForm">
+  <div class="modal-header">
+    <h4 class="modal-title">Submit your report</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <div class="mb-3">
+      <label for="description" class="form-label">Report body</label>
+      <textarea class="form-control" id="description" rows="4"
+                placeholder="some report" formControlName="report" name="report"></textarea>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary" [disabled]="reportForm.invalid"
+            (click)="activeModal.close('Close click')">Submit</button>
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+  </div>
+</form>

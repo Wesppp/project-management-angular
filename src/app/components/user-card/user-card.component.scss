@@ -1,0 +1,15 @@
+.list-group-item {
+  margin-bottom: 0.2rem;
+  transition: .3s;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.06);
+    margin: 0.5rem 0;
+  }
+
+  button {
+    margin-left: 10px;
+    padding: 0.1rem 0.5rem;
+  }
+}

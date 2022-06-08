@@ -1,0 +1,18 @@
+.modal-body {
+  .ms-2 {
+    display: flex;
+    justify-content: space-between;
+
+    .btn-primary {
+      padding: 0 0.6rem;
+    }
+  }
+
+  ul {
+    padding-left: 0;
+  }
+
+  h4 {
+    text-align: center;
+  }
+}

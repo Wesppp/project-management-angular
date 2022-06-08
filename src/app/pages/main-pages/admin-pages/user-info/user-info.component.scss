@@ -1,0 +1,30 @@
+.container {
+  .user {
+    margin-top: 2rem;
+  }
+
+  h2 {
+    font-weight: 600;
+    color: #fff;
+  }
+
+  .list-group {
+    list-style-type: none;
+    margin-top: 1rem;
+    padding-left: 2rem;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: #333333a3;
+
+    li {
+      margin-bottom: 0.2rem;
+
+      .card {
+        border-top-right-radius: 0;
+        border-top-left-radius: 0;
+
+      }
+    }
+  }
+}
+

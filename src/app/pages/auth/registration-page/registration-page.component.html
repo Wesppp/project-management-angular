@@ -1,0 +1,63 @@
+<div class="alert alert-danger alert-danger-repeat" role="alert" *ngIf="isRepeatUser">
+  a user with such an email already exists!
+</div>
+
+<div class="container">
+  <div class="form-wrapper">
+    <div class="form-head">
+      <h3>Registration-form</h3>
+    </div>
+
+    <form class="row g-3" [formGroup]="registrationForm" (ngSubmit)="register(registrationForm.value); registrationForm.reset()">
+      <div class="col-md-12">
+        <label for="inputEmail" class="form-label">Email</label>
+        <input type="email" class="form-control" id="inputEmail"
+               name="email" formControlName="email">
+        <div class="validation" *ngIf="registrationForm.get('email')?.invalid && registrationForm.get('email')?.touched">
+          <p class="alert alert-danger"
+             *ngIf="registrationForm.get('email')?.errors?.['required']">field is required</p>
+          <p class="alert alert-danger"
+             *ngIf="registrationForm.get('email')?.errors?.['email']">the email is not correct</p>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <label for="inputName" class="form-label">Name</label>
+        <input type="text" class="form-control" id="inputName"
+               name="name" formControlName="name">
+        <div class="validation" *ngIf="registrationForm.get('name')?.invalid && registrationForm.get('name')?.touched">
+          <p class="alert alert-danger"
+             *ngIf="registrationForm.get('name')?.errors?.['required']">field is required</p>
+          <p class="alert alert-danger"
+             *ngIf="registrationForm.get('name')?.errors?.['pattern']">the name is not correct</p>
+        </div>
+      </div>
+      <div class="col-12">
+        <label for="inputPassword" class="form-label">Password</label>
+        <input type="password" class="form-control" id="inputPassword"
+               name="password" formControlName="password">
+        <div class="validation" *ngIf="registrationForm.get('password')?.invalid && registrationForm.get('password')?.touched">
+          <p class="alert alert-danger"
+             *ngIf="registrationForm.get('password')?.errors?.['required']">field is required</p>
+          <p class="alert alert-danger"
+             *ngIf="registrationForm.get('password')?.errors?.['minlength']">minlength - 4</p>
+        </div>
+      </div>
+      <div class="col-12">
+        <label for="inputRepeatPassword" class="form-label">Repeat password</label>
+        <input type="password" class="form-control" id="inputRepeatPassword"
+               name="repeatPassword" formControlName="repeatPassword">
+        <div class="validation" *ngIf="registrationForm.get('repeatPassword')?.invalid && registrationForm.get('repeatPassword')?.touched">
+          <p class="alert alert-danger"
+             *ngIf="registrationForm.get('repeatPassword')?.errors?.['required']">field is required</p>
+          <p class="alert alert-danger"
+             *ngIf="registrationForm.get('repeatPassword')?.errors?.['minlength']">minlength - 4</p>
+        </div>
+      </div>
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary" [disabled]="registrationForm.invalid ||
+                registrationForm.get('password')?.value !== registrationForm.get('repeatPassword')?.value">Register</button>
+        <button type="button" class="btn btn-secondary" routerLink="/login-page">Back to login</button>
+      </div>
+    </form>
+  </div>
+</div>

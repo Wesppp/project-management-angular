@@ -1,0 +1,21 @@
+<div class="modal-header">
+  <h4 class="modal-title">Add users to project</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+  <ng-template #usersList>
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let user of users; let i=index">
+        <div class="ms-2 me-auto">
+          <div class="fw-bold">Name: {{ user.name }}({{ user.email }})</div>
+          <button class="btn btn-primary" (click)="addUser(user)">Add</button>
+        </div>
+      </li>
+    </ul>
+  </ng-template>
+
+  <h4 *ngIf="isEmpty; else usersList">no available users</h4>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+</div>

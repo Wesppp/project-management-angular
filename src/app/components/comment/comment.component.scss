@@ -1,0 +1,35 @@
+.comment-container {
+  border: 2px solid #ffff39;
+  border-top: none;
+  color: #fff;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+
+  .title {
+    border: 2px solid #ffff39;
+    padding: .5rem 1rem;
+    background-color: #ffff39;
+    color: #333;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+
+    .title-name {
+      font-size: 1.2rem;
+      font-weight: 650;
+    }
+
+    .title-date {
+      font-weight: 500;
+      opacity: .8;
+    }
+  }
+
+  .content {
+    padding: 1rem;
+    background-color: rgba(255, 255, 43, 0.07);
+
+    .content-text {
+      font-size: 1.2rem;
+    }
+  }
+}

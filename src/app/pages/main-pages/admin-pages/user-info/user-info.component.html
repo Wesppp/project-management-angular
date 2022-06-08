@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="user my-info-card">
+    <h1>{{ user.name }}({{ user.email }})</h1>
+    <hr>
+    <p></p>
+    <a class="back-arrow" (click)="goBack()">
+      <img src="../..//src/assets/icons/back-arrow.png" alt="Back">
+    </a>
+  </div>
+
+  <h2>Reports:</h2>
+
+  <app-progress-spinner *ngIf="isLoading; else list"></app-progress-spinner>
+
+  <ng-template #list>
+    <ul class="list-group">
+      <li *ngFor="let report of reports; let i = index">
+        <a class="list-group-item list-group-item-action" data-bs-toggle="collapse"
+           [href]="'#collapseExample'+i">{{ report.createDate }}</a>
+        <div class="collapse" [id]="'collapseExample'+i">
+          <div class="card card-body">
+            {{ report.report }}
+          </div>
+        </div>
+      </li>
+    </ul>
+  </ng-template>
+</div>

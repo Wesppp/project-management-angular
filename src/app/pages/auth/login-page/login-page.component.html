@@ -1,0 +1,43 @@
+<div class="alert alert-danger alert-danger-repeat" role="alert" *ngIf="isExistUser">
+  there is no such user!
+</div>
+
+<div class="container">
+  <div class="form-wrapper">
+    <div class="form-head">
+      <h3>Login-form</h3>
+    </div>
+
+    <form class="row g-3" [formGroup]="loginForm" (ngSubmit)="login(loginForm?.value); loginForm.reset()">
+      <div class="col-md-12">
+        <label for="inputEmail" class="form-label">Email</label>
+        <input type="email" class="form-control" id="inputEmail" name="email"
+               formControlName="email">
+        <div class="validation" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+          <p class="alert alert-danger"
+             *ngIf="loginForm.get('email')?.errors?.['required']">field is required</p>
+          <p class="alert alert-danger"
+            *ngIf="loginForm.get('email')?.errors?.['email']">the email is not correct</p>
+        </div>
+      </div>
+      <div class="col-12">
+        <label for="inputPassword" class="form-label">Password</label>
+        <input type="password" class="form-control" id="inputPassword"
+               formControlName="password" maxlength="16">
+        <div class="validation" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+          <p class="alert alert-danger"
+             *ngIf="loginForm.get('password')?.errors?.['required']">field is required</p>
+          <p class="alert alert-danger"
+             *ngIf="loginForm.get('password')?.errors?.['minlength']">minlength - 4</p>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <button [disabled]="loginForm.invalid" type="submit" class="btn btn-primary">Login</button>
+        <button type="button" class="btn btn-secondary" routerLink="/registration-page">Registration</button>
+      </div>
+
+    </form>
+  </div>
+</div>
+

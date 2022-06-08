@@ -1,0 +1,38 @@
+<div class="container">
+  <h1>
+    Registered Users
+  </h1>
+
+  <hr>
+
+  <header>
+    <div class="title">
+      <h3>Find the user:</h3>
+    </div>
+    <form class="d-flex search">
+      <input class="form-control me-2" type="search" placeholder="Misha" aria-label="Search"
+             [(ngModel)]="search" name="search">
+    </form>
+  </header>
+
+  <app-progress-spinner *ngIf="isLoading; else usersList"></app-progress-spinner>
+
+  <h2 *ngIf="isEmpty">There are no projects available. Add a new one</h2>
+
+  <ng-template #usersList>
+    <ul class="users-list">
+      <app-user-card *ngFor="let user of users | filter:'name':search"
+                        [user]="user"></app-user-card>
+    </ul>
+  </ng-template>
+
+  <h3>Statistics:</h3>
+
+  <div class="pie-chart">
+    <app-my-pie-chart [pieChartLabels]="['Busy users','Free users']"
+                      [pieChartData]="[busyUsers, users.length - busyUsers]"></app-my-pie-chart>
+  </div>
+</div>
+
+
+

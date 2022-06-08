@@ -1,0 +1,26 @@
+<div class="container">
+  <h1>My projects</h1>
+
+  <hr>
+
+  <header>
+    <div class="title">
+      <h3>Find the project:</h3>
+    </div>
+    <form class="d-flex search">
+      <input class="form-control me-2" type="search" placeholder="Project" aria-label="Search"
+             [(ngModel)]="search" name="search">
+    </form>
+  </header>
+
+  <app-progress-spinner *ngIf="isLoading; else projectsList"></app-progress-spinner>
+
+  <h2 *ngIf="isEmpty">There are no projects.</h2>
+
+  <ng-template #projectsList>
+    <ul class="projects-list">
+      <app-project-card *ngFor="let project of projects | filter:'title':search"
+                        [project]="project"></app-project-card>
+    </ul>
+  </ng-template>
+</div>

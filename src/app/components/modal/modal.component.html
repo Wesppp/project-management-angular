@@ -1,0 +1,26 @@
+<form [formGroup]="modalForm" (ngSubmit)="modalWindowBody.modalFunction(modalForm.value, this.project);modalForm.reset()"
+      *ngIf="modalForm">
+  <div class="modal-header">
+    <h4 class="modal-title">{{ modalWindowBody.title }}</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input type="text" class="form-control" id="title" placeholder="Project 1"
+             formControlName="title" name="title">
+    </div>
+
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea class="form-control" id="description" rows="4"
+                placeholder="some text" formControlName="description" name="description"></textarea>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary" [disabled]="modalForm.invalid"
+            (click)="activeModal.close('Close click')">{{ modalWindowBody.action }}</button>
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+  </div>
+</form>

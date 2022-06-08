@@ -1,0 +1,12 @@
+.progress-spinner-wrapper {
+  width: 100%;
+  height: 30vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .spinner-grow {
+    width: 200px;
+    height: 200px;
+  }
+}

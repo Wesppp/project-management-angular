@@ -1,0 +1,11 @@
+<li class="list-group-item d-flex justify-content-between align-items-start" [routerLink]="['/user-info', user._id]">
+  <div class="ms-2 me-auto">
+    <div class="fw-bold">{{ user.name }}</div>
+    <span *ngIf="router.url.includes('/users-admin-page')">Working on: (
+      <span *ngFor="let project of projects">{{project.title}}; </span>
+      )</span>
+  </div>
+  <span class="badge bg-primary rounded-pill">{{ user.email }}</span>
+  <button class="btn btn-danger" (click)="excludeUser(user, $event)"
+          *ngIf="router.url.includes('/project-info')">exclude</button>
+</li>
