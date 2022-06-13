@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {IUser} from "../../shared/interfaces/user";
 import {ActivatedRoute, Router} from "@angular/router";
 import { IProject } from 'src/app/shared/interfaces/project';
@@ -13,7 +13,6 @@ import {GlobalService} from "../../shared/services/global.service";
 export class UserCardComponent implements OnInit {
   @Input() user!: IUser
   @Input() project!: IProject
-  @Output() userTransfer = new EventEmitter<IUser>();
   projects!: IProject[]
 
   constructor(public router: Router,
@@ -33,15 +32,5 @@ export class UserCardComponent implements OnInit {
           this.projects = projects
         }
       },error => this.globalService.customDangerAlert(error.message).then())
-  }
-
-  excludeUser(user: IUser, $event: any) {
-    $event.stopPropagation()
-    this.userService.excludeUser(this.project._id!, user)
-      .subscribe(user => {
-        if (user) {
-          this.userTransfer.emit(user)
-        }
-      }, error => this.globalService.customDangerAlert(error.message).then())
   }
 }

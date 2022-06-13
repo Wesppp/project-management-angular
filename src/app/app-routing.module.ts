@@ -6,6 +6,7 @@ import {RegistrationPageComponent} from "./pages/auth/registration-page/registra
 import {MainLayoutComponent} from "./shared/layouts/main-layout/main-layout.component";
 import {HomePageComponent} from "./pages/main-pages/home-page/home-page.component";
 import {AuthGuard} from "./pages/auth/auth.guard";
+import {LoggedInAuthGuard} from "./pages/auth/logged-in-auth.guard";
 import {ProjectsAdminComponent} from "./pages/main-pages/admin-pages/projects-admin-page/projects-admin.component";
 import {ProjectsUserComponent} from "./pages/main-pages/projects-user-page/projects-user.component";
 import {UsersAdminComponent} from "./pages/main-pages/admin-pages/users-admin-page/users-admin.component";
@@ -14,7 +15,7 @@ import {UserInfoComponent} from "./pages/main-pages/admin-pages/user-info/user-i
 
 const routes: Routes = [
   {
-    path: '', component: AuthLayoutComponent, children: [
+    path: '', component: AuthLayoutComponent, canActivate: [LoggedInAuthGuard], children: [
       {path: '', redirectTo: '/login-page', pathMatch: 'full'},
       {path: 'login-page', component: LoginPageComponent},
       {path: 'registration-page', component: RegistrationPageComponent}

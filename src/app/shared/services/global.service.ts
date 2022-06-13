@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpHeaders} from "@angular/common/http";
-import {BehaviorSubject, Observable, of} from "rxjs";
+import {Observable, of} from "rxjs";
 import Swal from 'sweetalert2';
 
 @Injectable({
@@ -21,14 +21,14 @@ export class GlobalService {
     }
   }
 
-  handleWarningAlert() {
+  handleWarningAlert(text: string) {
     return Swal.fire({
       title: 'Are you sure?',
-      text: 'You will not be able to recover this!',
+      text: `${text}` || 'are you sure you want to do this?',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, keep it',
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
     })
   }
 
@@ -37,6 +37,16 @@ export class GlobalService {
       icon: 'error',
       title: 'Oops...',
       text: `${message || 'Something went wrong!'}`
+    })
+  }
+
+  customNotification(text?: string) {
+    return Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: `${text || 'Completed successfully'}`,
+      showConfirmButton: false,
+      timer: 1500
     })
   }
 }

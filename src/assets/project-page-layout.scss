@@ -25,6 +25,7 @@
     font-size: 3.2rem;
     letter-spacing: 0.02em;
     margin-top: 1rem;
+    margin-bottom: 1rem;
   }
 
   .projects-list {
@@ -46,9 +47,15 @@
     margin-top: 0;
   }
 
-  .add-btn {
+  .adjacent-btn {
+    margin-right: 0.5rem;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
+  }
+
+  .top-btns {
+    display: flex;
+    justify-content: space-between;
   }
 
   h2 {

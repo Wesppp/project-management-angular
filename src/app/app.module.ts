@@ -27,9 +27,10 @@ import { ProjectInfoComponent } from './pages/main-pages/admin-pages/project-inf
 import { CommentComponent } from './components/comment/comment.component';
 import {AuthInterceptor} from "./shared/inteceptors/auth.interceptor";
 import { ChartsModule } from 'ng2-charts';
-import { MyPieChartComponent } from './components/my-pie-chart/my-pie-chart.component';
+import { MyPieChartComponent } from './components/charts/my-pie-chart/my-pie-chart.component';
 import { ModalReportComponent } from './components/modal-report/modal-report.component';
 import { UserInfoComponent } from './pages/main-pages/admin-pages/user-info/user-info.component';
+import { MyBarChartComponent } from './components/charts/my-bar-chart/my-bar-chart.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { UserInfoComponent } from './pages/main-pages/admin-pages/user-info/user
     CommentComponent,
     MyPieChartComponent,
     ModalReportComponent,
-    UserInfoComponent
+    UserInfoComponent,
+    MyBarChartComponent
   ],
   imports: [
     BrowserModule,

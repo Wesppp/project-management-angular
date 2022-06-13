@@ -15,6 +15,12 @@ export class ReportService {
   constructor(private http: HttpClient,
               private globalService: GlobalService) { }
 
+  getReports(): Observable<IReport[]> {
+    return this.http.get<IReport[]>(this.reportsUrl).pipe(
+      catchError(this.globalService.handleError<IReport[]>("get reports"))
+    )
+  }
+
   addReport(report: IReport, projectId: string): Observable<IReport> {
     if (this.isDisabled) {return of()}
     this.isDisabled = true

@@ -5,7 +5,6 @@ import {catchError, finalize, Observable, of} from "rxjs";
 import {IUser} from "../interfaces/user";
 import {GlobalService} from "./global.service";
 import {IProject} from "../interfaces/project";
-import {IReport} from "../interfaces/report";
 
 @Injectable({
   providedIn: 'root'
@@ -55,20 +54,6 @@ export class UserService {
     const url = `${this.userUrl}/projects/${id}`
     return this.http.get<IProject[]>(url).pipe(
       catchError(this.globalService.handleError<IProject[]>("get projects in user"))
-    )
-  }
-
-  getUserReports(id: string): Observable<IReport[]> {
-    const url = `${this.userUrl}/reports/${id}`
-    return this.http.get<IReport[]>(url).pipe(
-      catchError(this.globalService.handleError<IReport[]>("get reports in user"))
-    )
-  }
-
-  excludeUser(id: string, user: IUser): Observable<IUser> {
-    const url = `${this.userUrl}/exclude/${id}`
-    return this.http.post<IUser>(url, user).pipe(
-      catchError(this.globalService.handleError<IUser>("exclude user"))
     )
   }
 }

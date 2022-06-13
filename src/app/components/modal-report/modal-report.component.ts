@@ -31,8 +31,11 @@ export class ModalReportComponent implements OnInit {
   addReport(reportFormData: any) {
     this.reportService.addReport({report: reportFormData.report} as IReport, this.project._id!)
       .subscribe(report => {
-        if (report) {return}
-        else console.log('something went wrong')
+        if (report) {
+          this.globalService.customNotification('Your report has been sent').then()
+        } else {
+          this.globalService.customDangerAlert().then()
+        }
       }, error => this.globalService.customDangerAlert(error.message).then())
   }
 }

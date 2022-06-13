@@ -3,6 +3,18 @@
     Registered Users
   </h1>
 
+
+  <div class="top-btns">
+    <div>
+      <button class="btn btn-warning adjacent-btn" type="button" (click)="switch(0)">
+        Users info
+      </button>
+
+      <button class="btn btn-warning adjacent-btn" type="button" (click)="switch(1)">
+        User statistics
+      </button>
+    </div>
+  </div>
   <hr>
 
   <header>
@@ -15,22 +27,29 @@
     </form>
   </header>
 
-  <app-progress-spinner *ngIf="isLoading; else usersList"></app-progress-spinner>
+  <div class="users" [ngSwitch]="toggle">
+    <div *ngSwitchCase="0">
+      <app-progress-spinner *ngIf="isLoading; else usersList"></app-progress-spinner>
 
-  <h2 *ngIf="isEmpty">There are no projects available. Add a new one</h2>
+      <h2 *ngIf="isEmpty">There are no registered users</h2>
 
-  <ng-template #usersList>
-    <ul class="users-list">
-      <app-user-card *ngFor="let user of users | filter:'name':search"
-                        [user]="user"></app-user-card>
-    </ul>
-  </ng-template>
+      <ng-template #usersList>
+        <ul class="users-list">
+          <app-user-card *ngFor="let user of users | filter:'name':search"
+                         [user]="user"></app-user-card>
+        </ul>
+      </ng-template>
+    </div>
 
-  <h3>Statistics:</h3>
+    <div class="statistics" *ngSwitchCase="1">
+      <app-my-bar-chart class="bar-chart" [barChartLabels]="barChartLabels"
+                        [barChartData]="barChartData"></app-my-bar-chart>
 
-  <div class="pie-chart">
-    <app-my-pie-chart [pieChartLabels]="['Busy users','Free users']"
-                      [pieChartData]="[busyUsers, users.length - busyUsers]"></app-my-pie-chart>
+      <div class="pie-chart">
+        <app-my-pie-chart [pieChartLabels]="['Busy users','Free users']"
+                          [pieChartData]="[busyUsers, users.length - busyUsers]"></app-my-pie-chart>
+      </div>
+    </div>
   </div>
 </div>
 

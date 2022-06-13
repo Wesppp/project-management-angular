@@ -5,17 +5,25 @@
 <div class="modal-body">
   <ng-template #usersList>
     <ul class="list-group">
-      <li class="list-group-item" *ngFor="let user of users; let i=index">
+      <li class="list-group-item" *ngFor="let user of availableUsers; let i=index">
         <div class="ms-2 me-auto">
           <div class="fw-bold">Name: {{ user.name }}({{ user.email }})</div>
           <button class="btn btn-primary" (click)="addUser(user)">Add</button>
         </div>
       </li>
+
+      <li class="list-group-item unavailable-user" *ngFor="let unAvailableUser of unAvailableUsers; let i=index">
+        <div class="ms-2 me-auto">
+          <div class="fw-bold">Name: {{ unAvailableUser.name }}({{ unAvailableUser.email }})</div>
+          <button class="btn btn-danger" (click)="excludeUser(unAvailableUser)">Exclude</button>
+        </div>
+      </li>
     </ul>
   </ng-template>
 
-  <h4 *ngIf="isEmpty; else usersList">no available users</h4>
+  <h4 *ngIf="isAvailableUsersEmpty && isUnAvailableUsersEmpty; else usersList">no available users</h4>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
 </div>
+

@@ -1,10 +1,22 @@
 <div class="container">
   <h1>Projects</h1>
 
-  <button class="btn btn-warning add-btn" type="button" data-bs-toggle="modal"
-          (click)="openAddModal()">Add new
-    project
-  </button>
+  <div class="top-btns">
+    <div>
+      <button class="btn btn-warning adjacent-btn" type="button"
+              (click)="viewFinishedProjects()">View finished projects
+      </button>
+
+      <button class="btn btn-warning adjacent-btn" type="button"
+              (click)="getProjects()">View current projects
+      </button>
+    </div>
+
+    <button class="btn btn-warning adjacent-btn" type="button" data-bs-toggle="modal"
+            (click)="openAddModal()" *ngIf="isUnfinished">Add new
+      project
+    </button>
+  </div>
   <hr>
 
   <header>
@@ -24,7 +36,8 @@
   <ng-template #projectsList>
     <ul class="projects-list">
       <app-project-card *ngFor="let project of projects | filter:'title':search"
-                        [project]="project" (broadcastEvent)="changeProjects($event)"></app-project-card>
+                        [project]="project" (broadcastEvent)="changeProjects($event)"
+                        [isUnfinished]="isUnfinished"></app-project-card>
     </ul>
   </ng-template>
 </div>

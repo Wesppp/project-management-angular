@@ -3,7 +3,7 @@
     display: flex;
     justify-content: space-between;
 
-    .btn-primary {
+    .btn {
       padding: 0 0.6rem;
     }
   }
@@ -14,5 +14,11 @@
 
   h4 {
     text-align: center;
+  }
+
+  .unavailable-user {
+    .fw-bold {
+      opacity: 0.6;
+    }
   }
 }

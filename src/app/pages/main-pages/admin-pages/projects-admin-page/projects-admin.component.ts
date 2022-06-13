@@ -16,6 +16,7 @@ export class ProjectsAdminComponent implements OnInit {
   isLoading: boolean = true
   search!: string;
   isEmpty: boolean = false
+  isUnfinished!: boolean
 
   constructor(private projectService: ProjectService,
               private globalService: GlobalService,
@@ -32,9 +33,9 @@ export class ProjectsAdminComponent implements OnInit {
           this.projects = projects.filter(el => !el.endDate)
           this.isLoading = false
           this.isEmpty = !this.projects.length;
+          this.isUnfinished = true
         } else {
           this.isEmpty = !this.projects.length;
-          this.isLoading = false
         }
       }, error => this.globalService.customDangerAlert(error.message).then())
   }
@@ -47,7 +48,7 @@ export class ProjectsAdminComponent implements OnInit {
           this.isEmpty = !this.projects.length;
           this.isLoading = false
         } else {
-          this.globalService.customDangerAlert().then()
+          this.globalService.customDangerAlert('This project name already exists').then()
         }
       }, error => this.globalService.customDangerAlert(error.message).then())
   }
@@ -64,5 +65,19 @@ export class ProjectsAdminComponent implements OnInit {
       action: 'ADD',
       modalFunction: this.addProject
     }
+  }
+
+  viewFinishedProjects() {
+    this.projectService.getProjects()
+      .subscribe(projects => {
+        if (projects.length && projects) {
+          this.projects = projects.filter(el => el.endDate)
+          this.isLoading = false
+          this.isEmpty = !this.projects.length;
+          this.isUnfinished = false
+        } else {
+          this.isEmpty = !this.projects.length;
+        }
+      }, error => this.globalService.customDangerAlert(error.message).then())
   }
 }

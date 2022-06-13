@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {IUser} from "../../../../shared/interfaces/user";
 import {UserService} from "../../../../shared/services/user.service";
 import {GlobalService} from "../../../../shared/services/global.service";
+import {ReportService} from "../../../../shared/services/report.service";
+import {IReport} from "../../../../shared/interfaces/report";
+import {ChartDataSets} from "chart.js";
+import moment from "moment";
+import {Label} from "ng2-charts";
 
 @Component({
   selector: 'app-users-admin-page',
@@ -11,16 +16,23 @@ import {GlobalService} from "../../../../shared/services/global.service";
 })
 export class UsersAdminComponent implements OnInit {
   search: string = '';
+  toggle: number = 0
   isLoading: boolean = true;
   users: IUser[] = []
+  reports!: IReport[]
   isEmpty: boolean = false;
   busyUsers!: number
+  public barChartLabels: Label[] = [];
+  public barChartData: ChartDataSets[] = [{ data: [], label: 'Reports made' }];
 
   constructor(private userService: UserService,
-              private globalService: GlobalService) { }
+              private globalService: GlobalService,
+              private reportService: ReportService) { }
 
   ngOnInit(): void {
+    this.getDates()
     this.getUsers()
+    this.getReports()
   }
 
   getUsers() {
@@ -33,7 +45,6 @@ export class UsersAdminComponent implements OnInit {
           this.busyUsers = this.getBusyUsers(users)
         } else {
           this.isEmpty = !this.users.length;
-          this.isLoading = false
         }
       }, error => this.globalService.customDangerAlert(error.message).then())
   }
@@ -46,5 +57,37 @@ export class UsersAdminComponent implements OnInit {
       }
     })
     return busyUsers
+  }
+
+  switch(num: number) {
+    this.toggle = num
+  }
+
+  getReports() {
+    this.reportService.getReports()
+      .subscribe(reports => {
+        if (reports && reports.length) {
+          this.reports = reports
+          this.calculateStatistics(reports)
+        } else {
+          this.reports = []
+        }
+      }, error => this.globalService.customDangerAlert(error.message).then())
+  }
+
+  calculateStatistics(reports: IReport[]) {
+    for(let i = 0; i < 5; i++) {
+      let count = 0
+      reports.forEach(r => {
+        if (this.barChartLabels[i].includes(r.createDate?.split(',')[0]!)) count++
+      })
+      this.barChartData[0].data?.push(count)
+    }
+  }
+
+  getDates() {
+    for(let i = 0; i < 5; i++) {
+      this.barChartLabels[i] = `${moment().subtract(i, 'days').format('DD.MM.YYYY')}`
+    }
   }
 }

@@ -49,6 +49,17 @@ export class ProjectService {
     )
   }
 
+  finishProject(project: IProject): Observable<IProject> {
+    if (this.isDisabled) {return of()}
+    this.isDisabled = true
+
+    let url = `${this.projectUrl}/finish`
+    return this.http.put<IProject>(url, project, this.globalService.httpOptions).pipe(
+      catchError(this.globalService.handleError<IProject>("finish project")),
+      finalize(() => this.isDisabled = false)
+    )
+  }
+
   deleteProject(id: string): Observable<IProject> {
     let url = `${this.projectUrl}/${id}`;
     return this.http.delete<IProject>(url, this.globalService.httpOptions).pipe(
@@ -74,6 +85,20 @@ export class ProjectService {
     return this.http.post<IProject>(url, user).pipe(
       catchError(this.globalService.handleError<IProject>("post project")),
       finalize(() => this.isDisabled = false)
+    )
+  }
+
+  excludeUserFromProject(id: string, user: IUser): Observable<IProject> {
+    const url = `${this.projectUrl}/exclude-user/${id}`
+    return this.http.post<IProject>(url, user).pipe(
+      catchError(this.globalService.handleError<IProject>("exclude user"))
+    )
+  }
+
+  getProjectReports(id: string): Observable<IReport[]> {
+    const url = `${this.projectUrl}/reports/${id}`
+    return this.http.get<IReport[]>(url).pipe(
+      catchError(this.globalService.handleError<IReport[]>("get reports from project"))
     )
   }
 }

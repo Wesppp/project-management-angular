@@ -16,6 +16,7 @@ import {ModalReportComponent} from "../modal-report/modal-report.component";
 })
 export class ProjectCardComponent implements OnInit {
   @Input() project!: IProject
+  @Input() isUnfinished!: boolean
   @Output() broadcastEvent = new EventEmitter<IProject>();
   role!: string
 
@@ -31,7 +32,7 @@ export class ProjectCardComponent implements OnInit {
 
   deleteProject($event: any) {
     $event.stopPropagation()
-    this.globalService.handleWarningAlert()
+    this.globalService.handleWarningAlert('You will not be able to recover this!')
       .then(result => {
         if (result.isConfirmed) {
           this.projectService.deleteProject(this.project._id!)
@@ -48,15 +49,20 @@ export class ProjectCardComponent implements OnInit {
 
   finishProject(project: IProject, $event: any) {
     $event.stopPropagation()
-    project.endDate = new Date().toLocaleDateString()
-    this.projectService.updateProject(project)
-      .subscribe(project => {
-        if (project) {
-          this.broadcastEvent.emit(project)
-        } else {
-          this.globalService.customDangerAlert().then()
+    this.globalService.handleWarningAlert('Are you sure you want to finish the project?')
+      .then(result => {
+        if (result.isConfirmed) {
+          project.endDate = new Date().toLocaleDateString()
+          this.projectService.finishProject(project)
+            .subscribe(project => {
+              if (project) {
+                this.broadcastEvent.emit(project)
+              } else {
+                this.globalService.customDangerAlert().then()
+              }
+            }, error => this.globalService.customDangerAlert(error.message).then())
         }
-      }, error => this.globalService.customDangerAlert(error.message).then())
+      })
   }
 
   editProject = (data: object, project: IProject) => {

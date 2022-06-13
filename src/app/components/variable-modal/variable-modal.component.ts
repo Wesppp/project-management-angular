@@ -13,10 +13,12 @@ import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
   styleUrls: ['./variable-modal.component.scss']
 })
 export class VariableModalComponent implements OnInit {
-  users!: IUser[]
   @Input() public project!: IProject;
   @Output() passEntry: EventEmitter<IProject> = new EventEmitter();
-  isEmpty: boolean = false;
+  isAvailableUsersEmpty: boolean = false;
+  isUnAvailableUsersEmpty: boolean = false;
+  availableUsers: IUser[] = []
+  unAvailableUsers: IUser[] = []
 
   constructor(private userService: UserService,
               private globalService: GlobalService,
@@ -24,10 +26,11 @@ export class VariableModalComponent implements OnInit {
               public activeModal: NgbActiveModal) { }
 
   ngOnInit(): void {
-    this.getUsers()
+    this.getAvailableUsers()
+    this.getUnAvailableUsers()
   }
 
-  getUsers() {
+  getAvailableUsers() {
     this.userService.getUsers()
       .pipe(
         map(el => el.filter(item => !item.role?.includes('admin'))),
@@ -35,9 +38,20 @@ export class VariableModalComponent implements OnInit {
       )
       .subscribe(users => {
         if (users.length && users) {
-          this.users = users
+          this.availableUsers = users
         } else {
-          this.isEmpty = !users.length
+          this.isAvailableUsersEmpty = !users.length
+        }
+      }, error => this.globalService.customDangerAlert(error.message).then())
+  }
+
+  getUnAvailableUsers() {
+    this.projectService.getUsersInProject(this.project._id!)
+      .subscribe(users => {
+        if (users.length && users) {
+          this.unAvailableUsers = users
+        } else {
+          this.isUnAvailableUsersEmpty = !users.length
         }
       }, error => this.globalService.customDangerAlert(error.message).then())
   }
@@ -46,11 +60,22 @@ export class VariableModalComponent implements OnInit {
     this.projectService.addUserToProject(this.project._id!, user)
       .subscribe(project => {
         if (project) {
-          this.users = this.users.filter(el => el._id !== user._id)
-          this.isEmpty = !this.users.length
+          this.availableUsers = this.availableUsers.filter(el => el._id !== user._id)
+          this.unAvailableUsers.push(user)
           this.passBack(project)
         }
         else this.globalService.customDangerAlert().then()
+      }, error => this.globalService.customDangerAlert(error.message).then())
+  }
+
+  excludeUser(user: IUser) {
+    this.projectService.excludeUserFromProject(this.project._id!, user)
+      .subscribe(project => {
+        if (project) {
+          this.unAvailableUsers = this.unAvailableUsers.filter(el => el._id !== user._id)
+          this.availableUsers.push(user)
+          this.passBack(project)
+        }
       }, error => this.globalService.customDangerAlert(error.message).then())
   }
 
