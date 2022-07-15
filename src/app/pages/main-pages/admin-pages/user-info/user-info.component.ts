@@ -56,10 +56,11 @@ export class UserInfoComponent implements OnInit {
       .subscribe(reports => {
         if (reports && reports.length) {
           this.reports = [...this.reports, ...reports]
-          this.isReportsLoading = false
           this.isEmpty = !reports.length
+          this.isReportsLoading = false
         } else {
           this.isEmpty = !reports.length
+          this.isReportsLoading = false
         }
       }, error => this.globalService.customDangerAlert(error.message).then())
   }
@@ -70,6 +71,8 @@ export class UserInfoComponent implements OnInit {
         if (projects && projects.length) {
           this.projects = projects
           this.getAllReports(projects)
+        } else {
+          this.isReportsLoading = false
         }
       },error => this.globalService.customDangerAlert(error.message).then())
   }

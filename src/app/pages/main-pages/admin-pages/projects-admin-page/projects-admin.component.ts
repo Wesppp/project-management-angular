@@ -4,6 +4,7 @@ import {IProject} from "../../../../shared/interfaces/project";
 import {GlobalService} from "../../../../shared/services/global.service";
 import {ModalComponent} from "../../../../components/modal/modal.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {ProjectStatus} from "../../../../shared/enums/project-status";
 
 @Component({
   selector: 'app-projects-admin-page',
@@ -13,10 +14,11 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 })
 export class ProjectsAdminComponent implements OnInit {
   projects: IProject[] = []
+  displayProjects: IProject[] = []
+  projectsStatus: ProjectStatus = 0
   isLoading: boolean = true
   search!: string;
   isEmpty: boolean = false
-  isUnfinished!: boolean
 
   constructor(private projectService: ProjectService,
               private globalService: GlobalService,
@@ -30,12 +32,12 @@ export class ProjectsAdminComponent implements OnInit {
     this.projectService.getProjects()
       .subscribe(projects => {
         if (projects.length && projects) {
-          this.projects = projects.filter(el => !el.endDate)
+          this.projects = projects
           this.isLoading = false
-          this.isEmpty = !this.projects.length;
-          this.isUnfinished = true
+          this.switchProjects(0)
         } else {
-          this.isEmpty = !this.projects.length;
+          this.isEmpty = !projects.length;
+          this.isLoading = false
         }
       }, error => this.globalService.customDangerAlert(error.message).then())
   }
@@ -45,17 +47,16 @@ export class ProjectsAdminComponent implements OnInit {
       .subscribe(project => {
         if (project) {
           this.projects.push(project)
+          this.switchProjects(0)
           this.isEmpty = !this.projects.length;
           this.isLoading = false
-        } else {
-          this.globalService.customDangerAlert('This project name already exists').then()
         }
       }, error => this.globalService.customDangerAlert(error.message).then())
   }
 
   changeProjects(project: IProject) {
     this.projects = this.projects.filter(el => el._id !== project._id)
-    this.isEmpty = !this.projects.length;
+    this.switchProjects(0)
   }
 
   openAddModal(project?: IProject) {
@@ -67,17 +68,9 @@ export class ProjectsAdminComponent implements OnInit {
     }
   }
 
-  viewFinishedProjects() {
-    this.projectService.getProjects()
-      .subscribe(projects => {
-        if (projects.length && projects) {
-          this.projects = projects.filter(el => el.endDate)
-          this.isLoading = false
-          this.isEmpty = !this.projects.length;
-          this.isUnfinished = false
-        } else {
-          this.isEmpty = !this.projects.length;
-        }
-      }, error => this.globalService.customDangerAlert(error.message).then())
+  switchProjects(status: number) {
+    this.displayProjects = this.projects.filter(project => project.status === status)
+    this.isEmpty = !this.displayProjects.length;
+    this.projectsStatus = status
   }
 }

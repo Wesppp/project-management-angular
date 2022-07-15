@@ -44,6 +44,7 @@ export class UsersAdminComponent implements OnInit {
           this.isEmpty = !this.users.length;
           this.busyUsers = this.getBusyUsers(users)
         } else {
+          this.isLoading = false
           this.isEmpty = !this.users.length;
         }
       }, error => this.globalService.customDangerAlert(error.message).then())

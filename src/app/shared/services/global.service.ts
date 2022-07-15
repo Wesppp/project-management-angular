@@ -13,7 +13,7 @@ export class GlobalService {
 
   handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      console.error(error)
+      this.customDangerAlert(error.error.text).then()
 
       console.log(`${operation} failed: ${error.message}`)
 

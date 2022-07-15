@@ -16,7 +16,6 @@ import {ModalReportComponent} from "../modal-report/modal-report.component";
 })
 export class ProjectCardComponent implements OnInit {
   @Input() project!: IProject
-  @Input() isUnfinished!: boolean
   @Output() broadcastEvent = new EventEmitter<IProject>();
   role!: string
 
@@ -53,6 +52,7 @@ export class ProjectCardComponent implements OnInit {
       .then(result => {
         if (result.isConfirmed) {
           project.endDate = new Date().toLocaleDateString()
+          project.status = 1
           this.projectService.finishProject(project)
             .subscribe(project => {
               if (project) {

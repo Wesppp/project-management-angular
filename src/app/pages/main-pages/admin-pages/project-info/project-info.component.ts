@@ -20,6 +20,7 @@ export class ProjectInfoComponent implements OnInit {
   isProjectLoading: boolean = true;
   role!: string
   isCommentsLoading: boolean = true
+  isEmptyComments: boolean = false
   commentsForm!: FormGroup
 
   constructor(private globalService: GlobalService,
@@ -47,6 +48,8 @@ export class ProjectInfoComponent implements OnInit {
         if (project) {
           this.project = project
           this.isProjectLoading = false
+        } else {
+          this.isProjectLoading = false
         }
       }, error => this.globalService.customDangerAlert(error.message).then())
   }
@@ -57,7 +60,10 @@ export class ProjectInfoComponent implements OnInit {
         if (comments.length && comments) {
           this.comments = comments
           this.isCommentsLoading = false
+          this.isEmptyComments = false
         } else {
+          this.isEmptyComments = true
+          this.isCommentsLoading = false
           this.comments = []
         }
       }, error => this.globalService.customDangerAlert(error.message).then())

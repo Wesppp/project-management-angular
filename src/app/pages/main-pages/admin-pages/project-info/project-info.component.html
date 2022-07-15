@@ -1,8 +1,8 @@
-<div class="container">
+<div class="container" *ngIf="project">
   <app-progress-spinner *ngIf="isProjectLoading; else projectInfo"></app-progress-spinner>
 
   <ng-template #projectInfo>
-    <div class="project my-info-card" *ngIf="project">
+    <div class="project my-info-card">
       <h1>{{ project.title }}</h1>
       <hr>
       <p>{{ project.description }}</p>
@@ -13,13 +13,18 @@
   </ng-template>
 
     <div class="comments">
-      <form [formGroup]="commentsForm" (ngSubmit)="addComment(commentsForm.value.content);commentsForm.reset()">
+      <form [formGroup]="commentsForm" (ngSubmit)="addComment(commentsForm.value.content);commentsForm.reset()"
+            *ngIf="project.status === 0">
         <h5>Leave a comment:</h5>
         <textarea class="form-control" rows="1" formControlName="content"></textarea>
         <button type="submit" class="btn btn-warning" [disabled]="commentsForm.invalid">Add</button>
       </form>
       <hr>
+
       <app-progress-spinner *ngIf="isCommentsLoading; else usersList"></app-progress-spinner>
+
+      <h3 class="notifying-message" *ngIf="isEmptyComments">There are no comments on this project.</h3>
+
       <ng-template #usersList>
         <ul class="comments-list">
           <app-comment *ngFor="let comment of comments" [comment]="comment"></app-comment>

@@ -1,3 +1,5 @@
+import {ProjectStatus} from "../enums/project-status";
+
 export interface IProject {
   _id?: string
   title: string
@@ -7,5 +9,6 @@ export interface IProject {
   creatorId?: string,
   img: string
   users?: {items: [{userId: string}]},
-  comments?: {items: [{commentId: string}]}
+  comments?: {items: [{commentId: string}]},
+  status?: ProjectStatus
 }
