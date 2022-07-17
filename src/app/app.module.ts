@@ -13,7 +13,7 @@ import { FormsModule } from "@angular/forms";
 import { ReactiveFormsModule } from "@angular/forms";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { ProjectsAdminComponent } from './pages/main-pages/admin-pages/projects-admin-page/projects-admin.component';
-import { ProjectsUserComponent } from './pages/main-pages/projects-user-page/projects-user.component';
+import { ProjectsUserComponent } from './pages/main-pages/user-pages/projects-user-page/projects-user.component';
 import { UsersAdminComponent } from './pages/main-pages/admin-pages/users-admin-page/users-admin.component';
 import { ProgressSpinnerComponent } from './components/progress-spinner/progress-spinner.component';
 import { ProjectCardComponent } from './components/project-card/project-card.component';
@@ -31,6 +31,7 @@ import { MyPieChartComponent } from './components/charts/my-pie-chart/my-pie-cha
 import { ModalReportComponent } from './components/modal-report/modal-report.component';
 import { UserInfoComponent } from './pages/main-pages/admin-pages/user-info/user-info.component';
 import { MyBarChartComponent } from './components/charts/my-bar-chart/my-bar-chart.component';
+import { UserReportsPageComponent } from './pages/main-pages/user-pages/user-reports-page/user-reports-page.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { MyBarChartComponent } from './components/charts/my-bar-chart/my-bar-cha
     MyPieChartComponent,
     ModalReportComponent,
     UserInfoComponent,
-    MyBarChartComponent
+    MyBarChartComponent,
+    UserReportsPageComponent
   ],
   imports: [
     BrowserModule,

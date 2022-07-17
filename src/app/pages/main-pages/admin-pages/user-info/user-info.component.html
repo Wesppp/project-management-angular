@@ -16,12 +16,12 @@
 
   <app-progress-spinner *ngIf="isReportsLoading; else reportList"></app-progress-spinner>
 
-  <h3 class="notifying-message" *ngIf="isEmpty">This user didn't leave reports</h3>
+  <h3 class="notifying-message" *ngIf="isNoReports()">This user didn't leave reports</h3>
 
   <ng-template #reportList>
     <ul class="list-group">
       <li *ngFor="let report of reports">
-        <a class="list-group-item list-group-item-action" data-bs-toggle="collapse">{{ report.createDate }}</a>
+        <a class="list-group-item list-group-item-action" data-bs-toggle="collapse">{{ report.projectTitle }} ({{ report.createDate }})</a>
           <div class="card card-body">
             {{ report.report }}
           </div>

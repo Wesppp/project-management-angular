@@ -7,6 +7,7 @@ import {VariableModalComponent} from "../variable-modal/variable-modal.component
 import {ModalComponent} from "../modal/modal.component";
 import {AuthService} from "../../pages/auth/auth.service";
 import {ModalReportComponent} from "../modal-report/modal-report.component";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -16,13 +17,15 @@ import {ModalReportComponent} from "../modal-report/modal-report.component";
 })
 export class ProjectCardComponent implements OnInit {
   @Input() project!: IProject
-  @Output() broadcastEvent = new EventEmitter<IProject>();
+  @Output() deleteProjectEvent = new EventEmitter<IProject>();
+  @Output() finishProjectEvent = new EventEmitter<IProject>();
   role!: string
 
   constructor(private projectService: ProjectService,
               private globalService: GlobalService,
               private modalService: NgbModal,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -37,7 +40,7 @@ export class ProjectCardComponent implements OnInit {
           this.projectService.deleteProject(this.project._id!)
             .subscribe((project) => {
               if (project) {
-                this.broadcastEvent.emit(project)
+                this.deleteProjectEvent.emit(project)
               } else {
                 this.globalService.customDangerAlert().then()
               }
@@ -56,7 +59,7 @@ export class ProjectCardComponent implements OnInit {
           this.projectService.finishProject(project)
             .subscribe(project => {
               if (project) {
-                this.broadcastEvent.emit(project)
+                this.finishProjectEvent.emit(project)
               } else {
                 this.globalService.customDangerAlert().then()
               }
@@ -98,5 +101,10 @@ export class ProjectCardComponent implements OnInit {
     $event.stopPropagation()
     const modalRef = this.modalService.open(ModalReportComponent);
     modalRef.componentInstance.project = project
+  }
+
+  viewReports(project: IProject, $event: MouseEvent) {
+    $event.stopPropagation()
+    this.router.navigate(['/user-project-reports', project._id])
   }
 }

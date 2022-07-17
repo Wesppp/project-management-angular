@@ -4,7 +4,9 @@
     *ngIf="role === 'admin' && project.status === 0"></button>
     <img [src]="project.img" class="card-img-top" alt="...">
     <div class="card-body">
-      <h5 class="card-title">{{ project.title }}</h5>
+      <h5 class="card-title">{{ project.title }}
+        <span class="project-status">({{ project.status === 0 ? 'in progress..' : 'finished' }})</span>
+      </h5>
       <p class="card-text">{{ project.description }}</p>
     </div>
     <ul class="list-group list-group-flush">
@@ -19,8 +21,13 @@
         </button>
         <button class="btn btn-secondary" (click)="finishProject(project, $event)">FINISH</button>
       </div>
-      <button *ngIf="role === 'user'" class="btn btn-secondary task-btn"
-              (click)="openReportModal(project, $event)">Do the report</button>
+
+      <div class="user-access-btns" *ngIf="role === 'user'">
+        <button class="btn btn-secondary user-btn"
+                (click)="openReportModal(project, $event)">Do the report</button>
+        <button class="btn btn-secondary user-btn"
+                (click)="viewReports(project, $event)">View reports</button>
+      </div>
     </div>
   </div>
 </li>

@@ -56,10 +56,8 @@ export class UserInfoComponent implements OnInit {
       .subscribe(reports => {
         if (reports && reports.length) {
           this.reports = [...this.reports, ...reports]
-          this.isEmpty = !reports.length
           this.isReportsLoading = false
         } else {
-          this.isEmpty = !reports.length
           this.isReportsLoading = false
         }
       }, error => this.globalService.customDangerAlert(error.message).then())
@@ -79,5 +77,9 @@ export class UserInfoComponent implements OnInit {
 
   getAllReports(projects: IProject[]) {
     projects.forEach(p => this.getReports(p._id!))
+  }
+
+  isNoReports(): boolean {
+    return !this.reports.length
   }
 }

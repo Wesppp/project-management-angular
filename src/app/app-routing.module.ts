@@ -8,10 +8,11 @@ import {HomePageComponent} from "./pages/main-pages/home-page/home-page.componen
 import {AuthGuard} from "./pages/auth/auth.guard";
 import {LoggedInAuthGuard} from "./pages/auth/logged-in-auth.guard";
 import {ProjectsAdminComponent} from "./pages/main-pages/admin-pages/projects-admin-page/projects-admin.component";
-import {ProjectsUserComponent} from "./pages/main-pages/projects-user-page/projects-user.component";
+import {ProjectsUserComponent} from "./pages/main-pages/user-pages/projects-user-page/projects-user.component";
 import {UsersAdminComponent} from "./pages/main-pages/admin-pages/users-admin-page/users-admin.component";
 import {ProjectInfoComponent} from "./pages/main-pages/admin-pages/project-info/project-info.component";
 import {UserInfoComponent} from "./pages/main-pages/admin-pages/user-info/user-info.component";
+import {UserReportsPageComponent} from "./pages/main-pages/user-pages/user-reports-page/user-reports-page.component";
 
 const routes: Routes = [
   {
@@ -29,7 +30,8 @@ const routes: Routes = [
       {path: 'users-admin-page', component: UsersAdminComponent, data: {roles: ['admin']}},
       {path: 'projects-user-page', component: ProjectsUserComponent},
       {path: 'project-info/:id', component: ProjectInfoComponent},
-      {path: 'user-info/:id', component: UserInfoComponent}
+      {path: 'user-info/:id', component: UserInfoComponent},
+      {path: 'user-project-reports/:id', component: UserReportsPageComponent}
     ]
   }
 ];

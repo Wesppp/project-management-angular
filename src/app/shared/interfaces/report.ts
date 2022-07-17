@@ -1,5 +1,6 @@
 export interface IReport {
-  report: string
+  report: string,
+  projectTitle: string,
   createDate?: string
   authorId?: string
   _id?: string

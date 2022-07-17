@@ -54,11 +54,6 @@ export class ProjectsAdminComponent implements OnInit {
       }, error => this.globalService.customDangerAlert(error.message).then())
   }
 
-  changeProjects(project: IProject) {
-    this.projects = this.projects.filter(el => el._id !== project._id)
-    this.switchProjects(0)
-  }
-
   openAddModal(project?: IProject) {
     const modalRef = this.modalService.open(ModalComponent);
     modalRef.componentInstance.modalWindowBody = {
@@ -72,5 +67,15 @@ export class ProjectsAdminComponent implements OnInit {
     this.displayProjects = this.projects.filter(project => project.status === status)
     this.isEmpty = !this.displayProjects.length;
     this.projectsStatus = status
+  }
+
+  deleteProject(project: IProject) {
+    this.projects = this.projects.filter(p => p._id !== project._id)
+    this.switchProjects(0)
+  }
+
+  finishProject(project: IProject) {
+    this.projects = this.projects.filter(p => p._id === project._id ? project : p)
+    this.switchProjects(0)
   }
 }

@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import {IProject} from "../../../shared/interfaces/project";
-import {AuthService} from "../../auth/auth.service";
-import {UserService} from "../../../shared/services/user.service";
-import {GlobalService} from "../../../shared/services/global.service";
+import {IProject} from "../../../../shared/interfaces/project";
+import {AuthService} from "../../../auth/auth.service";
+import {UserService} from "../../../../shared/services/user.service";
+import {GlobalService} from "../../../../shared/services/global.service";
 
 @Component({
   selector: 'app-projects-user-page',
   templateUrl: './projects-user.component.html',
   styleUrls: ['./projects-user.component.scss',
-  '../../../../assets/project-page-layout.scss']
+  '../../../../../assets/project-page-layout.scss']
 })
 export class ProjectsUserComponent implements OnInit {
   search: string = '';

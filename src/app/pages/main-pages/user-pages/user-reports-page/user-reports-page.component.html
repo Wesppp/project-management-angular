@@ -1,0 +1,18 @@
+<div class="container">
+  <h1>Your reports</h1>
+
+  <app-progress-spinner *ngIf="isLoading; else reportList"></app-progress-spinner>
+
+  <h3 class="notifying-message" *ngIf="isEmpty">You didn't leave any reports for this project</h3>
+
+  <ng-template #reportList>
+    <ul class="list-group">
+      <li *ngFor="let report of reports">
+        <a class="list-group-item list-group-item-action" data-bs-toggle="collapse">{{ report.createDate }}</a>
+        <div class="card card-body">
+          {{ report.report }}
+        </div>
+      </li>
+    </ul>
+  </ng-template>
+</div>

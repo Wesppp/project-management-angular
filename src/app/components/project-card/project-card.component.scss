@@ -34,8 +34,14 @@
     -webkit-box-orient: vertical;
   }
 
-  .task-btn {
-    width: 100%;
+  .user-access-btns {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .project-status {
+    font-size: 14px;
+    color: #ffbb70;
   }
 }
 
